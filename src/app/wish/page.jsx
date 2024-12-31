@@ -1,8 +1,14 @@
 "use client";
 import React from 'react';
- import wishStore from '../components/appstore';
- const NewYearPage = () => {
+import wishStore from '../components/appstore';
+
+const NewYearPage = () => {
     const { formdata } = wishStore();
+
+    const currentUrl = window.location.href; // Récupère l'URL actuelle de la page
+
+    const encodedMessage = encodeURIComponent(formdata.message);
+    const shareMessage = `${formdata.name} te souhaite une Bonne Année 2025! \n${encodedMessage}`;
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-purple-700 to-pink-500 px-6 py-12">
@@ -12,20 +18,73 @@ import React from 'react';
                 </h1>
 
                 <p className="text-2xl text-gray-600 mt-6 leading-relaxed">
-                    {formdata.message}                 </p>                 <div className="flex items-center justify-center mt-8">                     <img
+                    {formdata.message}
+                </p>
+                <div className="flex items-center justify-center mt-8">
+                    <img
                         src={formdata.image}
                         alt="Image de Voeux"
-                        className="rounded-lg border-4 border-pink-500 shadow-md max-w-xs sm:max-w-md md:max-w-lg hover:scale-105 transition-transform duration-300 cursor-pointer"                     />
+                        className="rounded-lg border-4 border-pink-500 shadow-md max-w-xs sm:max-w-md md:max-w-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    />
                 </div>
+
+                <div className="mt-6">
+                    <p className="text-xl text-gray-700">Partagez ce message avec vos proches :</p>
+                    <div className="flex justify-center space-x-4 mt-4">
+                        {/* WhatsApp */}
+                        <a
+                            href={`https://wa.me/?text=${shareMessage} ${currentUrl}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-green-500 hover:text-green-600"
+                        >
+                            <i className="bi bi-whatsapp text-3xl"></i>
+                        </a>
+
+                        {/* Facebook */}
+                        <a
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-700"
+                        >
+                            <i className="bi bi-facebook text-3xl"></i>
+                        </a>
+
+                        {/* Twitter (X) */}
+                        <a
+                            href={`https://twitter.com/intent/tweet?text=${shareMessage} ${currentUrl}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 hover:text-blue-500"
+                        >
+                            <i className="bi bi-twitter text-3xl"></i>
+                        </a>
+
+                        {/* Telegram */}
+                        <a
+                            href={`https://t.me/share/url?url=${currentUrl}&text=${shareMessage}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:text-blue-600"
+                        >
+                            <i className="bi bi-telegram text-3xl"></i>
+                        </a>
+                    </div>
+                </div>
+
                 <footer className="text-gray-500 text-sm mt-12">
-                Développé par <a href="https://www.sikapa.site" className="font-semibold text-gray-700" target="_blank" rel="noopener noreferrer">Sikapa</a>
+                    Développé par <a href="https://www.sikapa.site" className="font-semibold text-gray-700" target="_blank" rel="noopener noreferrer">Sikapa</a>
                 </footer>
             </div>
         </div>
     );
 };
 
+
 export default NewYearPage;
+
+
 // "use client";
 // import React, { useEffect, useRef } from "react";
 // import wishStore from "../components/appstore";
